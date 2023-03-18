@@ -192,20 +192,8 @@
 <div class="grid-body">
 
 <div class="col-uno" id="col-uno">
-    <!-- <div class="form-group grid-in">
-      <label for="cabecera">Cabecera</label>
-      <input type="text" name="cabecera" id="cabecera" class="form-control por">
-      <input type="text" name="cabecera" id="cabecera" class="form-control por">
-      <input type="text" name="cabecera" id="cabecera" class="form-control por">
-    </div>
-
-    <div class="form-group grid-in">
-      <label for="cabecera">Cabecera</label>
-      <input type="text" name="cabecera" id="cabecera" class="form-control por">
-      <input type="text" name="cabecera" id="cabecera" class="form-control por">
-      <input type="text" name="cabecera" id="cabecera" class="form-control por">
-    </div> -->
-
+    
+  
 
 </div>
 

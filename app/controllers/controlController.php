@@ -107,5 +107,20 @@ public function getCol(string $area)
     die();
 }
 
+public function getProductData(){
+    $producto = new controlModel();
+    $producto->producto = $_POST['prod'];
+    $producto->area     = $_POST['area'];
+    $producto->columna  = $_POST['columns'];
+    $req = $producto->productData();
+    if(empty($req)) {
+        $request = array("status"=>false, "msg"=>"Sin datos.");
+    }else{
+        $request = array("status"=>true, "data"=>$req);
+    }
+    echo json_encode($request);
+    
+}
+
 
 }

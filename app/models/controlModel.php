@@ -15,6 +15,7 @@ public $empleado;
 public $fecha;
 public $area;
 public $descripcion;
+public $columna;
 
 
 public function products()
@@ -103,6 +104,24 @@ public function columnas()
     }catch(Exception $e){
         throw $e;
     }
+}
+
+public function productData()
+{
+    // $columnas = explode(',', $this->columna);
+    // $colum = 
+    // for($i=0;$i<count($columnas);$i++){
+        $sql = "SELECT {$this->columna} FROM {$this->area} WHERE producto LIKE '{$this->producto}'";
+        return $request = parent::query($sql, ['prod'=>$this->producto]);
+    // }
+    
+    // $sql = "SELECT {$this->columna} FROM {$this->area} WHERE producto=:prod";
+    /* try{
+        $request = parent::query($sql, ['prod'=>$this->producto]);
+        return $request;
+    }catch(Exception $e){
+        throw $e;
+    } */
 }
 
 
