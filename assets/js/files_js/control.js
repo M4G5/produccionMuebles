@@ -83,14 +83,12 @@ function cargarProducto(area)
 }
 
 var arrayAssoc=[];
-// var inputs = '';
 
 function loadCol(area,labels,producto)
 {
     
     var cajas = '';
     arrayAssoc=[];
-    // inputs = '';
     var requestCol = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
     var ajaxCol = base_url+'control/getCol/'+area;
     var lbl1=0;
@@ -117,17 +115,11 @@ function loadCol(area,labels,producto)
                 requestdata.send(datos);
                 requestdata.onreadystatechange = function(){
                     if(requestdata.readyState == 4 && requestdata.status==200){
-                        // console.log(requestdata.responseText);
                         var objData = JSON.parse(requestdata.responseText);
-                        // console.log(objData);
-                        // console.log(objData.data[0][3]);
                         for(var elem = 0;elem<arrayAssoc.length;elem++){
-                            // console.log(objData.data[0][elem]);
-                            // console.log(elem+' = '+objData.data[0][elem]+' '+labels[elem]);
                             if(objData.data[0][elem] < 0.1){
                                 console.log('NO add inputs');
                             }else{
-                                console.log('add inputs '+labels[elem]);
                                 console.log('si-'+elem+' = '+objData.data[0][elem]+' '+labels[elem]);
                                 cajas += 
                                 '<div class="form-group grid-in" name="padre" id="padre">'+
@@ -137,17 +129,13 @@ function loadCol(area,labels,producto)
                                 '<input type="text" name="puntos'+labels[elem]+'" id="puntos'+labels[elem]+'" class="form-control por" disabled>'+
                                 '<input type="text" name="porcentaje'+labels[elem]+'" id="porcentaje'+labels[elem]+'" class="form-control por" disabled>'+
                                 '</div>';
-                            }
-                            
+                            }   
                         }
-                        
                     }
-                    console.log(cajas);
+                    // console.log(cajas);
                     labelsInput.innerHTML = cajas;
-                }      
-                        
-        }
-           
+                }            
+        }  
     }
 
 }
@@ -188,154 +176,148 @@ if(areaClick != 'frentes_cajones'){
             loadCol(areaClick,comedor,producto);
         break;
         case 'CAJONERA':
-            const cajonera = ['Cajonera'];
-            loadCol(areaClick,cajonera,producto);
+                const cajonera = ['Cajonera'];
+                loadCol(areaClick,cajonera,producto);
             break;
-
-        /* case 'LITERA':
-            for(var i = 0;i < label_litera.length; i++){
-                inputs += 
-                '<div class="form-group grid-in" name="padre" id="padre" >'+
-                '<label for="'+label_litera[i].toLowerCase()+'" class="lbls">'+label_litera[i]+'</label>'+
-                '<input type="text" name="'+label_litera[i].toLowerCase()+'" id="'+label_litera[i].toLowerCase()+'" class="form-control por">'+
-                '<input type="text" name="puntos'+label_litera[i]+'" id="puntos'+label_litera[i]+'" class="form-control por" disabled>'+
-                '<input type="text" name="porcentaje'+label_litera[i]+'" id="porcentaje'+label_litera[i]+'" class="form-control por" disabled>'+
-                '</div>';
-              }
-        break;
-
-        case 'COMEDOR':
-            
-            var pzs = 0;
-            if (subProduct[1] == 'EMPERADOR'){
-                pzs = 4;
-            }else if(subProduct[1] == 'ARY' || subProduct[1] == 'NATALY' || subProduct[1] == 'TULUM'){
-                pzs = 1;
-            }
-            else{
-                pzs = 2;
-            }
-            
-            for(var i = 0;i < pzs; i++){
-                inputs += 
-                '<div class="form-group grid-in" name="padre" id="padre">'+
-                '<div class="cantidad"><label for="'+label_comedor[i].toLowerCase()+'" class="lbls">'+label_comedor[i]+'</label></div>'+
-                '<input type="text" name="'+label_comedor[i].toLowerCase()+'" id="'+label_comedor[i].toLowerCase()+'" class="form-control por">'+
-                '<input type="text" name="puntos'+label_comedor[i]+'" id="puntos'+label_comedor[i]+'" class="form-control por" disabled>'+
-                '<input type="text" name="porcentaje'+label_comedor[i]+'" id="porcentaje'+label_comedor[i]+'" class="form-control por" disabled>'+
-                
-                '</div>';
-              }
-        break;
-
-        case 'CAJONERA':
-                inputs += 
-                '<div class="form-group grid-in" name="padre" id="padre">'+
-                '<label for="cajonera" class="lbls">Cajonera</label>'+
-                '<input type="text" name="cajonera" id="cajonera" class="form-control por">'+
-                '<input type="text" name="puntosCajonera" id="puntosCajonera" class="form-control por" disabled>'+
-                '<input type="text" name="porcentajeCajonera" id="porcentajeCajonera" class="form-control por" disabled>'+
-                '</div>';
-            
-        break;
-
-        case 'CENTRO':            
-                inputs += 
-                '<div class="form-group grid-in" name="padre" id="padre">'+
-                '<label for="centro" class="lbls">Centro</label>'+
-                '<input type="text" name="centro" id="centro" class="form-control por">'+
-                '<input type="text" name="puntosCentro" id="puntosCentro" class="form-control por" disabled>'+
-                '<input type="text" name="porcentajeCentro" id="porcentajeCentro" class="form-control por" disabled>'+
-                '</div>';
-            
-        break;
-
-        case 'BUFETERA':            
-                inputs += 
-                '<div class="form-group grid-in" name="padre" id="padre">'+
-                '<label for="bufetera" class="lbls">Bufetera</label>'+
-                '<input type="text" name="bufetera" id="bufetera" class="form-control por">'+
-                '<input type="text" name="puntosBufetera" id="puntosBufetera" class="form-control por" disabled>'+
-                '<input type="text" name="porcentajeBufetera" id="porcentajeBufetera" class="form-control por" disabled>'+
-                '</div>';
-            
-        break;
-
-        case 'JGO':
-            for(var i = 0;i < label_jgo.length; i++){
-                inputs += 
-                '<div class="form-group grid-in" name="padre" id="padre">'+
-                '<label for="'+label_jgo[i].toLowerCase()+'" class="lbls">'+label_jgo[i]+'</label>'+
-                '<input type="text" name="'+label_jgo[i].toLowerCase()+'" id="'+label_jgo[i].toLowerCase()+'" class="form-control por">'+
-                '<input type="text" name="puntos'+label_jgo[i]+'" id="puntos'+label_jgo[i]+'" class="form-control por" disabled>'+
-                '<input type="text" name="porcentaje'+label_jgo[i]+'" id="porcentaje'+label_jgo[i]+'" class="form-control por" disabled>'+
-                '</div>';
-              }
-        break;
-
+        case 'CENTRO':
+                const centro = ['Centro'];
+                loadCol(areaClick,centro,producto);
+            break;
+        case 'BUFETERA':
+                const bufetera = ['Bufetera'];
+                loadCol(areaClick,bufetera,producto);
+            break;
+            case 'JGO':
+                const jgo = ['Centro','Lateral','Lateral'];
+                loadCol(areaClick,jgo,producto);                
+            break;
         case 'MESA':
-            var pzs = (subProduct[3]=='TOSCANO') ? 3 : 1;
-
-            for(var i = 0;i < pzs; i++){
-                inputs += 
-                '<div class="form-group grid-in" name="padre" id="padre">'+
-                '<label for="'+label_jgo[i].toLowerCase()+'" class="lbls">'+label_jgo[i]+'</label>'+
-                '<input type="text" name="'+label_jgo[i].toLowerCase()+'" id="'+label_jgo[i].toLowerCase()+'" class="form-control por">'+
-                '<input type="text" name="puntos'+label_jgo[i]+'" id="puntos'+label_jgo[i]+'" class="form-control por" disabled>'+
-                '<input type="text" name="porcentaje'+label_jgo[i]+'" id="porcentaje'+label_jgo[i]+'" class="form-control por" disabled>'+
-                '</div>';
-              }
-        break;
-
+                var mesa = (subProduct[3]=='TOSCANO') ? ['Centro','Lateral','Lateral'] : ["Centro"];
+                loadCol(areaClick,mesa,producto);
+            break;
         case 'TORRE':
             case 'SEPARADOR':
-            var sp = subProduct[0] =='TORRE' ? 'Torre' : 'Separador';
-                inputs +=
-                '<div class="form-group grid-in" name="padre" id="padre">'+
-                '<label for="torre" class="lbls">'+sp+'</label>'+
-                '<input type="text" name=torre" id="torre" class="form-control por">'+
-                '<input type="text" name="puntos'+sp+'" id="puntos'+sp+'" class="form-control por" disabled>'+
-                '<input type="text" name="porcentaje'+sp+'" id="porcentaje'+sp+'" class="form-control por" disabled>'+
-                '</div>';
-        break;
-
+                var t_s = subProduct[0] =='TORRE' ? ['Torre'] : ['Separador'];
+                loadCol(areaClick,t_s,producto);
+            break;
         case 'ARMARIO':
-            var sub = subProduct[2] =='MONICA' ? 'Armario' : 'Armario';
-                inputs += 
-                '<div class="form-group grid-in" name="padre" id="padre">'+
-                '<label for="armario" class="lbls">'+sub+'</label>'+
-                '<input type="text" name="armario" id="armario" class="form-control por">'+
-                '<input type="text" name="puntos'+sub+'" id="puntos'+sub+'" class="form-control por" disabled>'+
-                '<input type="text" name="porcentaje'+sub+'" id="porcentaje'+sub+'" class="form-control por" disabled>'+
-                '</div>';
-        break;
-
+                var armario = ["Armario"];
+                loadCol(areaClick,armario,producto);
+            break;
         case 'BAR':
-                inputs += 
-                '<div class="form-group grid-in" name="padre" id="padre">'+
-                '<label for="bar" class="lbls">Bar</label>'+
-                '<input type="text" name="bar" id="bar" class="form-control por">'+
-                '<input type="text" name="puntosBar" id="puntosBar" class="form-control por" disabled>'+
-                '<input type="text" name="porcentajeBar" id="porcentajeBar" class="form-control por" disabled>'+
-                '</div>';
-        break; */
+                var bar = ["Bar"];
+                loadCol(areaClick,bar,producto);
+            break;
 
         default:
-            
             loadCol(areaClick,'',producto);
         break;
     }
 
 }
 else{
-    console.log("FRENTES Y CAJONES");
+    switch(subProduct[0]) {
+
+        case 'REC':
+            case 'BURO':
+                case 'LITERA':
+                    case 'ARMARIO':
+                        var rec = [];
+                        if(subProduct[1]=='FRANCIA'){
+                            rec = ['Frentes', 'Cajones', 'Puertas', 'Respaldos','Barrotes'];
+                        }else{
+                            rec = ['Frentes', 'Cajones', 'Puertas', 'Respaldos'];  
+                        }
+            
+            loadCol(areaClick,rec,producto);
+        break;
+
+        /* case 'BURO':
+            const buro = ['Frentes', 'Cajones', 'Puertas', 'Respaldos'];
+            loadCol(areaClick,buro,producto);
+        break;
+        case 'LITERA':
+            const litera = ['Frentes', 'Cajones', 'Puertas', 'Respaldos'];
+            loadCol(areaClick,litera,producto);
+        break;
+        case 'CAJONERA':
+                var cajonera = ['Frentes','Cajones','Puertas','Respaldo'];
+                loadCol(areaClick,cajonera,producto);
+            break; */
+        case 'COMEDOR':
+            var comedor = [];
+            if(subProduct[1]=='LISBOA' || subProduct[1]=='TURIN'){
+                comedor = ['Efectos', 'Tiras'];
+            }else{
+                comedor = ['Frentes', 'Cajones', 'Puertas', 'Respaldos'];
+            }
+            
+            loadCol(areaClick,comedor,producto);
+        break;
+        case 'CAJONERA':
+                var cajonera = ['Frentes','Cajones','Puertas','Respaldo'];
+                loadCol(areaClick,cajonera,producto);
+            break;
+        case 'CENTRO':
+            var centro = [];
+            if(subProduct[2]=='MARLIN'){
+                centro = ['Frentes','Cajones','Respaldo','Entrepaño','Tiras'];
+            }else if(subProduct[2]=='SANTAYO'){
+                centro = ['Frentes','Cajones','Tira'];
+            }
+            else{
+                centro = ['Frentes','Cajones','Puertas','Respaldos'];
+            }
+            
+                loadCol(areaClick,centro,producto);
+            break;
+        case 'BUFETERA':
+                var bufetera = [];
+                if(subProduct[1]=='TURIN' || subProduct[1]=='LISBOA'){
+                    bufetera = ['Frentes','Cajones','Puertas','Efectos'];
+                }else{
+                    bufetera = ['Frentes','Cajones','Puertas','Respaldos'];
+                }
+                // console.log(subProduct[1]);
+                loadCol(areaClick,bufetera,producto);
+            break;
+            case 'JGO':
+                // case 'MESA':
+                // const jgo = ['Efecto'];
+                var jgo = [];
+                if(subProduct[2]=='LAURENCE'){
+                    jgo = ['Frentes','Cajones','Puertas','Respaldo'];
+                }else{
+                    jgo = ['Efecto'];
+                }
+                // console.log(subProduct[2]);
+                loadCol(areaClick,jgo,producto);                
+            break;
+        /* case 'MESA':
+                var mesa = (subProduct[3]=='TOSCANO') ? ['Centro','Lateral','Lateral'] : ["Centro"];
+                loadCol(areaClick,mesa,producto);
+            break; */
+        /* case 'TORRE':
+            case 'SEPARADOR':
+                var t_s = subProduct[0] =='TORRE' ? ['Torre'] : ['Separador'];
+                loadCol(areaClick,t_s,producto);
+            break; */
+        /* case 'ARMARIO':
+                var armario = ["Armario"];
+                loadCol(areaClick,armario,producto);
+            break; */
+        case 'BAR':
+                var bar = ['Frentes','Cajones','Puertas','Respaldo','Botellero', 'Portahielo'];
+                loadCol(areaClick,bar,producto);
+            break;
+
+        default:
+            loadCol(areaClick,'',producto);
+        break;
+    }
 }
 
-    
-    console.log(arrayAssoc);
-// arrayAssoc=[];
-    /* labels.innerHTML = inputs;
-    inputs = ''; */
+    // console.log(arrayAssoc);
 }
 
 /**
@@ -348,12 +330,10 @@ links.forEach(li =>{
     li.addEventListener('click',()=>{
         resetLinks();
         li.classList.add('active');
-        // console.log('click '+ li.getAttribute('id'));
         $("#nombres").empty();
         cargarProducto(li.getAttribute('id'));
         $("#nombres").empty().append('<option selected disabled value="0">Seleccione una opcion...</option>');
         areaClick = li.getAttribute('id')
-        // loadCol(areaClick);
     });
     
 });
@@ -363,37 +343,18 @@ function resetLinks(){
         li.classList.remove('active');
     });
 }
-
-
 /*      END clase active       */
 
 
-// let areaSelec;
 document.querySelector("#btnCalcular").addEventListener('click', ()=>{
-    // var areaSelec;
-    // links.forEach(li =>{
-    //     var hasClase2 = li.classList.contains( 'active' );
-    //     if(hasClase2){
-    //         console.log(li.getAttribute('id'));
-    //         areaSelec = li.getAttribute('id');
-    //     }
-    // });
-
+    
     /**
-     * obtener nuemo de personas y capacidad
+     * obtener numero de personas y capacidad
      */
     var selectedEmp = $('#empleado').select2("data");
     var capacidadArea = document.querySelector("#capacidad").value;
-        /*for (var i = 0; i <= selectedEmp.length-1; i++) {
-            console.log(selectedEmp[i].text);
-        }*/
-    // console.log(document.querySelector("#capacidad").value);
     var nEmpleados = capacidadArea ==1 ? 1 : selectedEmp.length;
-    // console.log(nEmpleados);
-
     var html = document.querySelectorAll('#padre');
-    
-    // var area = 'corte';
     var selectProd = document.querySelector('#nombres').value;
     
     var requestElemt = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject("Microsoft:XMLHTTP");
@@ -404,43 +365,58 @@ document.querySelector("#btnCalcular").addEventListener('click', ()=>{
     requestElemt.send(datos);
     requestElemt.onreadystatechange = function () {
         if(requestElemt.readyState == 4 && requestElemt.status == 200) {
-            // console.log(requestElemt.responseText);
             var objElem = JSON.parse(requestElemt.responseText);
             // console.log(objElem);
-            // var sizeHtml = html.length;
-            // var nodelist = html.childNodes;
-           
-           var col=0;
-           var arr = ['uno','dos','tres','cuatro'];
-           var colum;
+            shareInfoLen = Object.keys(objElem.data[0]).length / 2;
 
-            for(let i of  html){
-                colum = 'col_'+arr[col];
-                    i.children.item(2).value = (i.children.item(1).name == 'buro' ? ((i.children.item(1).value/2) * objElem.data[0][colum]) / nEmpleados : (i.children.item(1).value * objElem.data[0][colum]) / nEmpleados).toFixed(1);
-                    i.children.item(3).value = ((i.children.item(2).value * 100) / ((objElem.data[0]['capacidad'] * objElem.data[0]['puntos']) / capacidadArea)).toFixed(3);
-                col++;
-                
+            const valInputs = [];
+            var indiceArr = 0;
+            var countCol = (areaClick != 'frentes_cajones') ? 3 : 4;
+            for(let i=countCol; i<shareInfoLen-3; i++){
+                if(objElem.data[0][i] > 0){
+                    valInputs.push(objElem.data[0][i]);
+                }
             }
 
             var totalPuntos=0;
             var totalPorcentaje=0;
-            for(let j of html){
-                totalPuntos = parseFloat(totalPuntos) + parseFloat(j.children.item(2).value);
-                totalPorcentaje = parseFloat(totalPorcentaje) + parseFloat(j.children.item(3).value);
-                // console.log(j.children.item(2).value);
-            }            
-            document.querySelector("#totalPunto").value = totalPuntos;
-            document.querySelector("#totalPorcentaje").value = totalPorcentaje;
-            // console.log('Total ' + total);
+            if(areaClick=='frentes_cajones'){
+                var piezas = objElem.data[0]['piezas'].split("-");
+                // console.log(piezas[0].charAt(0));
+                html.forEach((itemm, index)=>{
+                    // console.log(piezas[index].charAt(0));
+                    itemm.children.item(3).value = (itemm.children.item(1).textContent=='Buro') ? 
+                                                    ((itemm.children.item(2).value/2) * (valInputs[index] / piezas[index].charAt(0))) : 
+                                                    (itemm.children.item(2).value * (valInputs[index]/piezas[index].charAt(0)));
+                    itemm.children.item(4).value = parseFloat((itemm.children.item(3).value * 100) / ((objElem.data[0]['capacidad'] * objElem.data[0]['puntos']) / capacidadArea));
+                    /* totalPuntos += parseFloat(itemm.children.item(3).value);
+                    totalPorcentaje += parseFloat(itemm.children.item(4).value); */
+                });
+            }else{
+                html.forEach((itemm, index)=>{
+                itemm.children.item(3).value = (itemm.children.item(1).textContent=='Buro') ? 
+                                                ((itemm.children.item(2).value/2) * valInputs[index]) : (itemm.children.item(2).value * valInputs[index]);
+                itemm.children.item(4).value = parseFloat((itemm.children.item(3).value * 100) / ((objElem.data[0]['capacidad'] * objElem.data[0]['puntos']) / capacidadArea));
+                /* totalPuntos += parseFloat(itemm.children.item(3).value);
+                totalPorcentaje += parseFloat(itemm.children.item(4).value); */
+                });
+            }
+            /* html.forEach((itemm, index)=>{
+                itemm.children.item(3).value = (itemm.children.item(1).textContent=='Buro') ? 
+                                                ((itemm.children.item(2).value/2) * valInputs[index]) : (itemm.children.item(2).value * valInputs[index]);
+                itemm.children.item(4).value = parseFloat((itemm.children.item(3).value * 100) / ((objElem.data[0]['capacidad'] * objElem.data[0]['puntos']) / capacidadArea));
+                totalPuntos += parseFloat(itemm.children.item(3).value);
+                totalPorcentaje += parseFloat(itemm.children.item(4).value);
+            }); */
+            totalPuntos += parseFloat(itemm.children.item(3).value);
+            totalPorcentaje += parseFloat(itemm.children.item(4).value);
+
+            document.querySelector("#totalPunto").value = totalPuntos.toFixed(2);
+            document.querySelector("#totalPorcentaje").value = totalPorcentaje.toFixed(2);
+            
         }
 
     }
-
-
-// var selected = $('#empleado').find(':selected').text();
-// console.log(selected);
-
-
 
 });
 
@@ -467,11 +443,11 @@ document.querySelector('#btnSave').addEventListener('click', function(){
         var inputs = document.querySelectorAll('#padre');
         var dataInputs = new Array();
         for(let items of inputs){
-            dataInputs.push(items.children.item(0).textContent+':'+items.children.item(1).value);
+            dataInputs.push(items.children.item(1).textContent+':'+items.children.item(2).value);
         }
+// console.log(dataInputs);
 
-
-    var data = 'fecha='+fecha+'&empleados='+empleados+'&producto='+producto+'&tpuntos='+totalPuntos+'&tporcentaje='+totalPorcentaje+'&inputs='+dataInputs+'&area='+areaSelec;
+    var data = 'fecha='+fecha+'&empleados='+empleados+'&producto='+producto+'&tpuntos='+totalPuntos+'&tporcentaje='+totalPorcentaje+'&inputs='+dataInputs+'&area='+areaClick;
     var requestAdd = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
     var ajaxAdd = base_url+'control/setRep';
     requestAdd.open('POST', ajaxAdd, true);
