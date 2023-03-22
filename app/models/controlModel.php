@@ -124,5 +124,16 @@ public function productData()
     } */
 }
 
+public function allAreas()
+{
+    $sql = "SELECT * FROM area";
+    try{
+        $request = parent::query($sql);
+        return $request;
+    }catch(Exception $e){
+        throw $e;
+    }
+}
+
 
 }

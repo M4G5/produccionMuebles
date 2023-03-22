@@ -40,7 +40,7 @@
             </div>
             <div class="box-body no-padding divAreas">
               <ul class="nav nav-pills nav-stacked areas" id="areas">
-                <li class="pillArea active" id="corte"><a href="#"><i class="fa fa-file-text-o"></i> Corte<span class="label label-primary pull-right">12</span></a></li>
+               <!--  <li class="pillArea active" id="corte"><a href="#"><i class="fa fa-file-text-o"></i> Corte<span class="label label-primary pull-right">12</span></a></li>
                 <li class="pillArea" id="router"><a href="#"><i class="fa fa-file-text-o"></i> Router</a></li>
                 <li class="pillArea" id="pulido_banda"><a href="#"><i class="fa fa-file-text-o"></i> Pulido de banda</a></li>
                 <li class="pillArea" id="armado"><a href="#"><i class="fa fa-file-text-o"></i> Armado <span class="label label-warning pull-right">65</span></a></li>
@@ -49,7 +49,7 @@
                 <li class="pillArea" id="pintura"><a href="#"><i class="fa fa-file-text-o"></i> Pintura</a></li>
                 <li class="pillArea" id="laca"><a href="#"><i class="fa fa-file-text-o"></i> Laca</a></li>
                 <li class="pillArea" id="frentes_cajones"><a href="#"><i class="fa fa-file-text-o"></i> Frentes y cajones</a></li>
-                <li class="pillArea" id="melamina"><a href="#"><i class="fa fa-file-text-o"></i> Melamina</a></li>
+                <li class="pillArea" id="melamina"><a href="#"><i class="fa fa-file-text-o"></i> Melamina</a></li> -->
               </ul>
             </div>
             <!-- /.box-body -->

@@ -14,19 +14,72 @@ $('#empleado').select2();
 
 const labelsInput = document.querySelector("#col-uno");
 
-const label_rec = ['Cabecera', 'Tocador', 'Buro', 'Luna'];
+/* const label_rec = ['Cabecera', 'Tocador', 'Buro', 'Luna'];
 const label_fc=["Frentes","Cajones","Puertas","Resplado","Barrote",""];
 
 const label_buro = ['Buro'];
 const label_litera = ['CajonChica','CajonGrande'];
 const label_comedor = ['Pedestal','Cubierta','Bufetera','Trinchador'];
 const label_cajonera = ['Cajonera'];
-const label_jgo = ['Mesa','Lateral','Lateral'];
+const label_jgo = ['Mesa','Lateral','Lateral']; */
+
+// var links='';
+var ul = document.getElementById("areas");
+let areaClick;
+$( document ).ready(function() {
+    var requestArea = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
+        var ajaxArea = base_url+'control/getAreas';
+        requestArea.open('POST',ajaxArea,true);
+        requestArea.send();
+        requestArea.onreadystatechange = function(){
+            if(requestArea.readyState==4 && requestArea.status==200){
+                var objAreas = JSON.parse(requestArea.responseText);
+                // console.log(objAreas);
+                objAreas.data.forEach((elemnt,index)=>{
+                    // console.log(elemnt[1]);
+                    // ul.innerHTML += '<li class="pillArea" id="'+elemnt[1]+'"><a href="#"><i class="fa fa-file-text-o"></i> '+elemnt[2]+'</a></li>';
+                    const li = document.createElement('li');
+                    li.classList = "pillArea";
+                    li.id=elemnt[1];
+                    li.setAttribute("data-capacidad",elemnt[3]);
+                    li.innerHTML='<a href="#"><i class="fa fa-file-text-o"></i>'+elemnt[2]+'</a>';
+                    ul.appendChild(li);
+                });
+
+                var links = document.querySelectorAll('.pillArea');
+        /* console.log(ul.children.length);
+        for (let node of links) {
+            console.log(node);
+          }  */
+          
+links.forEach(li =>{
+    li.addEventListener('click',()=>{
+        resetLinks();
+        li.classList.add('active');
+        $("#nombres").empty();
+        // console.log(li.getAttribute('data-capacidad'));
+        $("#capacidad").empty().append('<option selected disabled value="'+li.getAttribute('data-capacidad')+'">'+li.getAttribute('data-capacidad')+'</option>');
+        cargarProducto(li.getAttribute('id'));
+        $("#nombres").empty().append('<option selected disabled value="0">Seleccione una opcion...</option>');
+        areaClick = li.getAttribute('id')
+    }); 
+});
+function resetLinks(){
+    links.forEach(li =>{
+        li.classList.remove('active');
+    });
+}
+
+            }
+        }
+        
+        
+});
+
+
 
 const names = document.querySelector('#nombres');
 document.addEventListener('DOMContentLoaded', function (e) {
-    cargarProducto('corte');
-    // loadCol('corte',label_rec,'');
     areaClick = 'corte';
     tablePreRep = $('#tableUser').DataTable({
         language: {
@@ -52,11 +105,16 @@ document.addEventListener('DOMContentLoaded', function (e) {
         "order": [[0, "asc"]]
         });
 
+        
+        cargarProducto('corte');
 
 });
 
+
+
 function cargarProducto(area)
 {
+    
     /**
          * cargar productos por areas
          */
@@ -80,6 +138,9 @@ function cargarProducto(area)
             
         }
     }
+
+    
+
 }
 
 var arrayAssoc=[];
@@ -118,9 +179,9 @@ function loadCol(area,labels,producto)
                         var objData = JSON.parse(requestdata.responseText);
                         for(var elem = 0;elem<arrayAssoc.length;elem++){
                             if(objData.data[0][elem] < 0.1){
-                                console.log('NO add inputs');
+                                // console.log('NO add inputs');
                             }else{
-                                console.log('si-'+elem+' = '+objData.data[0][elem]+' '+labels[elem]);
+                                // console.log('si-'+elem+' = '+objData.data[0][elem]+' '+labels[elem]);
                                 cajas += 
                                 '<div class="form-group grid-in" name="padre" id="padre">'+
                                 '<input type="hidden" id="verproducto" value="'+producto+'">'+
@@ -142,6 +203,7 @@ function loadCol(area,labels,producto)
 
 function change_prod()
 {      
+    
     document.querySelector("#totalPunto").value = 0;
     document.querySelector("#totalPorcentaje").value = 0;
 
@@ -324,7 +386,7 @@ else{
  * Agregar clase active
  */
 
-var links = document.querySelectorAll('.areas li');
+/* var links = document.querySelectorAll('.areas li');
 let areaClick;
 links.forEach(li =>{
     li.addEventListener('click',()=>{
@@ -334,20 +396,19 @@ links.forEach(li =>{
         cargarProducto(li.getAttribute('id'));
         $("#nombres").empty().append('<option selected disabled value="0">Seleccione una opcion...</option>');
         areaClick = li.getAttribute('id')
-    });
-    
+    }); 
 });
 
 function resetLinks(){
     links.forEach(li =>{
         li.classList.remove('active');
     });
-}
+} */
 /*      END clase active       */
 
 
+
 document.querySelector("#btnCalcular").addEventListener('click', ()=>{
-    
     /**
      * obtener numero de personas y capacidad
      */
@@ -389,16 +450,16 @@ document.querySelector("#btnCalcular").addEventListener('click', ()=>{
                                                     ((itemm.children.item(2).value/2) * (valInputs[index] / piezas[index].charAt(0))) : 
                                                     (itemm.children.item(2).value * (valInputs[index]/piezas[index].charAt(0)));
                     itemm.children.item(4).value = parseFloat((itemm.children.item(3).value * 100) / ((objElem.data[0]['capacidad'] * objElem.data[0]['puntos']) / capacidadArea));
-                    /* totalPuntos += parseFloat(itemm.children.item(3).value);
-                    totalPorcentaje += parseFloat(itemm.children.item(4).value); */
+                    totalPuntos += parseFloat(itemm.children.item(3).value);
+                    totalPorcentaje += parseFloat(itemm.children.item(4).value);
                 });
             }else{
                 html.forEach((itemm, index)=>{
                 itemm.children.item(3).value = (itemm.children.item(1).textContent=='Buro') ? 
                                                 ((itemm.children.item(2).value/2) * valInputs[index]) : (itemm.children.item(2).value * valInputs[index]);
                 itemm.children.item(4).value = parseFloat((itemm.children.item(3).value * 100) / ((objElem.data[0]['capacidad'] * objElem.data[0]['puntos']) / capacidadArea));
-                /* totalPuntos += parseFloat(itemm.children.item(3).value);
-                totalPorcentaje += parseFloat(itemm.children.item(4).value); */
+                totalPuntos += parseFloat(itemm.children.item(3).value);
+                totalPorcentaje += parseFloat(itemm.children.item(4).value);
                 });
             }
             /* html.forEach((itemm, index)=>{
@@ -408,8 +469,6 @@ document.querySelector("#btnCalcular").addEventListener('click', ()=>{
                 totalPuntos += parseFloat(itemm.children.item(3).value);
                 totalPorcentaje += parseFloat(itemm.children.item(4).value);
             }); */
-            totalPuntos += parseFloat(itemm.children.item(3).value);
-            totalPorcentaje += parseFloat(itemm.children.item(4).value);
 
             document.querySelector("#totalPunto").value = totalPuntos.toFixed(2);
             document.querySelector("#totalPorcentaje").value = totalPorcentaje.toFixed(2);

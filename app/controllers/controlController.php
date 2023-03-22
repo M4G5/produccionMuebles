@@ -122,5 +122,17 @@ public function getProductData(){
     
 }
 
+public function getAreas()
+{
+    $areas = new controlModel();
+    $request = $areas->allAreas();
+    if(empty($request)){
+        $requestAreas = array("status"=>false, "msg"=>"Sin Datos.");
+    }else{
+        $requestAreas = array("status"=>true,"data"=>$request);
+    }
+    echo json_encode($requestAreas);
+}
+
 
 }
