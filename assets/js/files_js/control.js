@@ -14,18 +14,9 @@ $('#empleado').select2();
 
 const labelsInput = document.querySelector("#col-uno");
 
-/* const label_rec = ['Cabecera', 'Tocador', 'Buro', 'Luna'];
-const label_fc=["Frentes","Cajones","Puertas","Resplado","Barrote",""];
-
-const label_buro = ['Buro'];
-const label_litera = ['CajonChica','CajonGrande'];
-const label_comedor = ['Pedestal','Cubierta','Bufetera','Trinchador'];
-const label_cajonera = ['Cajonera'];
-const label_jgo = ['Mesa','Lateral','Lateral']; */
-
-// var links='';
 var ul = document.getElementById("areas");
 let areaClick;
+
 $( document ).ready(function() {
     var requestArea = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
         var ajaxArea = base_url+'control/getAreas';
@@ -34,10 +25,7 @@ $( document ).ready(function() {
         requestArea.onreadystatechange = function(){
             if(requestArea.readyState==4 && requestArea.status==200){
                 var objAreas = JSON.parse(requestArea.responseText);
-                // console.log(objAreas);
                 objAreas.data.forEach((elemnt,index)=>{
-                    // console.log(elemnt[1]);
-                    // ul.innerHTML += '<li class="pillArea" id="'+elemnt[1]+'"><a href="#"><i class="fa fa-file-text-o"></i> '+elemnt[2]+'</a></li>';
                     const li = document.createElement('li');
                     li.classList = "pillArea";
                     li.id=elemnt[1];
@@ -46,36 +34,57 @@ $( document ).ready(function() {
                     ul.appendChild(li);
                 });
 
-                var links = document.querySelectorAll('.pillArea');
-        /* console.log(ul.children.length);
-        for (let node of links) {
-            console.log(node);
-          }  */
-          
-links.forEach(li =>{
-    li.addEventListener('click',()=>{
-        resetLinks();
-        li.classList.add('active');
-        $("#nombres").empty();
-        // console.log(li.getAttribute('data-capacidad'));
-        $("#capacidad").empty().append('<option selected disabled value="'+li.getAttribute('data-capacidad')+'">'+li.getAttribute('data-capacidad')+'</option>');
-        cargarProducto(li.getAttribute('id'));
-        $("#nombres").empty().append('<option selected disabled value="0">Seleccione una opcion...</option>');
-        areaClick = li.getAttribute('id')
-    }); 
-});
-function resetLinks(){
-    links.forEach(li =>{
-        li.classList.remove('active');
-    });
-}
+                document.querySelectorAll('.pillArea')[0].classList.add('active');
 
+                var links = document.querySelectorAll('.pillArea');
+                links.forEach(li =>{
+                li.addEventListener('click',()=>{
+                    resetLinks();
+                    li.classList.add('active');
+                    $("#nombres").empty();
+                    /* if(document.querySelector("#id").value.length == 0){
+                        $("#nombres").empty();
+                        cargarProducto(li.getAttribute('id'));
+                        $("#nombres").empty().append('<option selected disabled value="0">Seleccione una opcion...</option>');
+                    } */
+                    // console.log(document.querySelector("#id").value.length);
+
+                    $("#capacidad").val(li.getAttribute('data-capacidad'));
+                    cargarProducto(li.getAttribute('id'));
+                    $("#nombres").empty().append('<option selected disabled value="0">Seleccione una opcion...</option>');
+                    areaClick = li.getAttribute('id');
+                }); 
+                });
+
+                function resetLinks(){
+                    links.forEach(li =>{
+                        li.classList.remove('active');
+                    });
+                }
+            }
+    }
+        
+
+        const empleados = document.querySelector("#empleado");
+
+        var requestEmployee = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
+        var ajaxEmployee = base_url+'control/getEmployyes';
+        requestEmployee.open('POST', ajaxEmployee, true);
+        requestEmployee.send();
+        requestEmployee.onreadystatechange = function() {
+            if(requestEmployee.readyState==4 && requestEmployee.status==200) {
+                var objEmpleyee = JSON.parse(requestEmployee.responseText);
+                // console.log(objEmpleyee.data.length);
+                objEmpleyee.data.forEach((element)=>{
+                    var option = document.createElement('option');
+                    option.value = element[1];
+                    option.text = element[1];
+                    empleados.appendChild(option);
+                })
             }
         }
         
-        
 });
-
 
 
 const names = document.querySelector('#nombres');
@@ -90,31 +99,43 @@ document.addEventListener('DOMContentLoaded', function (e) {
             "dataSrc": ""
         },
         "columns":[
+            {"data":"id_reporte"},
+            {"data":"n_reporte"},
             {"data":"nombre"},
             {"data":"fecha"},
             {"data":"area"},
             {"data":"producto"},
             {"data":"descripcion"},
             {"data":"puntos"},
-            {"data":"porcentaje"}
-            // {"data":"acciones"}
+            {"data":"porcentaje"},
+            {"data":"acciones"}
+        ],
+        "columnDefs": [
+            {
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            },
+            {
+                "targets": [1],
+                "visible": false,
+                "searchable": false
+            }
         ],
         "responsive": "true",
         "bDestroy": true,
         "iDisplayLegth": 5,
-        "order": [[0, "asc"]]
+        "order": [[0, "DESC"]]
         });
 
-        
         cargarProducto('corte');
-
+       
 });
 
 
 
 function cargarProducto(area)
 {
-    
     /**
          * cargar productos por areas
          */
@@ -208,14 +229,8 @@ function change_prod()
     document.querySelector("#totalPorcentaje").value = 0;
 
     var producto = document.querySelector('#nombres').value;
-    // var inputs = '';
     var subProduct = producto.split(' ');
-    /*console.log(producto);
-    console.log(subProduct);
-    console.log(subProduct[0]);
-    console.log(subProduct[1]);*/
     
-
 if(areaClick != 'frentes_cajones'){
     
     switch(subProduct[0]) {
@@ -414,7 +429,9 @@ document.querySelector("#btnCalcular").addEventListener('click', ()=>{
      */
     var selectedEmp = $('#empleado').select2("data");
     var capacidadArea = document.querySelector("#capacidad").value;
-    var nEmpleados = capacidadArea ==1 ? 1 : selectedEmp.length;
+    // var nEmpleados = capacidadArea == 1 ? 1 : selectedEmp.length;
+    
+    var nEmpleados = (selectedEmp.length > 0) ? selectedEmp.length : alert('Seleccione empleado');
     var html = document.querySelectorAll('#padre');
     var selectProd = document.querySelector('#nombres').value;
     
@@ -443,33 +460,26 @@ document.querySelector("#btnCalcular").addEventListener('click', ()=>{
             var totalPorcentaje=0;
             if(areaClick=='frentes_cajones'){
                 var piezas = objElem.data[0]['piezas'].split("-");
-                // console.log(piezas[0].charAt(0));
-                html.forEach((itemm, index)=>{
-                    // console.log(piezas[index].charAt(0));
+                html.forEach((itemm, index)=>{                    
                     itemm.children.item(3).value = (itemm.children.item(1).textContent=='Buro') ? 
-                                                    ((itemm.children.item(2).value/2) * (valInputs[index] / piezas[index].charAt(0))) : 
-                                                    (itemm.children.item(2).value * (valInputs[index]/piezas[index].charAt(0)));
-                    itemm.children.item(4).value = parseFloat((itemm.children.item(3).value * 100) / ((objElem.data[0]['capacidad'] * objElem.data[0]['puntos']) / capacidadArea));
+                                                    (capacidadArea==1) ? ((itemm.children.item(2).value/2) * (valInputs[index] / piezas[index].charAt(0))) : ((itemm.children.item(2).value/2) * (valInputs[index] / piezas[index].charAt(0)))/nEmpleados : 
+                                                    (capacidadArea==1) ? (itemm.children.item(2).value * (valInputs[index]/piezas[index].charAt(0))) :(itemm.children.item(2).value * (valInputs[index]/piezas[index].charAt(0)))/nEmpleados;
+                    itemm.children.item(4).value = (itemm.children.item(3).value * 100) / ((objElem.data[0]['capacidad'] * objElem.data[0]['puntos'])/capacidadArea);
                     totalPuntos += parseFloat(itemm.children.item(3).value);
                     totalPorcentaje += parseFloat(itemm.children.item(4).value);
                 });
             }else{
+                
                 html.forEach((itemm, index)=>{
+                    
                 itemm.children.item(3).value = (itemm.children.item(1).textContent=='Buro') ? 
-                                                ((itemm.children.item(2).value/2) * valInputs[index]) : (itemm.children.item(2).value * valInputs[index]);
-                itemm.children.item(4).value = parseFloat((itemm.children.item(3).value * 100) / ((objElem.data[0]['capacidad'] * objElem.data[0]['puntos']) / capacidadArea));
+                                                (capacidadArea==1) ? ((itemm.children.item(2).value/2) * valInputs[index]) : ((itemm.children.item(2).value/2) * valInputs[index])/nEmpleados : 
+                                                (capacidadArea==1) ? (itemm.children.item(2).value * valInputs[index]) : ((itemm.children.item(2).value * valInputs[index])/nEmpleados);
+                itemm.children.item(4).value = (itemm.children.item(3).value * 100) / ((objElem.data[0]['capacidad'] * objElem.data[0]['puntos'])/capacidadArea);
                 totalPuntos += parseFloat(itemm.children.item(3).value);
                 totalPorcentaje += parseFloat(itemm.children.item(4).value);
                 });
             }
-            /* html.forEach((itemm, index)=>{
-                itemm.children.item(3).value = (itemm.children.item(1).textContent=='Buro') ? 
-                                                ((itemm.children.item(2).value/2) * valInputs[index]) : (itemm.children.item(2).value * valInputs[index]);
-                itemm.children.item(4).value = parseFloat((itemm.children.item(3).value * 100) / ((objElem.data[0]['capacidad'] * objElem.data[0]['puntos']) / capacidadArea));
-                totalPuntos += parseFloat(itemm.children.item(3).value);
-                totalPorcentaje += parseFloat(itemm.children.item(4).value);
-            }); */
-
             document.querySelector("#totalPunto").value = totalPuntos.toFixed(2);
             document.querySelector("#totalPorcentaje").value = totalPorcentaje.toFixed(2);
             
@@ -491,22 +501,23 @@ document.querySelector('#btnSave').addEventListener('click', function(){
     var producto = document.querySelector("#nombres").value;
     var totalPuntos = document.querySelector("#totalPunto").value;
     var totalPorcentaje = document.querySelector("#totalPorcentaje").value;
+    var capacidadArea = document.querySelector("#capacidad").value;
+    var nreporte = document.querySelector("#nrep").value;
+    var id = document.querySelector("#id").value;
 
     for (var i = 0; i <= selectedEmp.length-1; i++) {
             empleados.push(selectedEmp[i].text);
             nEmpleados++;
         }
-
-    
         
         var inputs = document.querySelectorAll('#padre');
         var dataInputs = new Array();
         for(let items of inputs){
             dataInputs.push(items.children.item(1).textContent+':'+items.children.item(2).value);
         }
-// console.log(dataInputs);
 
-    var data = 'fecha='+fecha+'&empleados='+empleados+'&producto='+producto+'&tpuntos='+totalPuntos+'&tporcentaje='+totalPorcentaje+'&inputs='+dataInputs+'&area='+areaClick;
+    var data = 'fecha='+fecha+'&empleados='+empleados+'&producto='+producto+'&tpuntos='+totalPuntos+'&tporcentaje='+totalPorcentaje+'&inputs='+dataInputs+
+                '&area='+areaClick+'&capacidad='+capacidadArea+'&nreporte='+nreporte+'&id='+id;
     var requestAdd = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
     var ajaxAdd = base_url+'control/setRep';
     requestAdd.open('POST', ajaxAdd, true);
@@ -514,6 +525,7 @@ document.querySelector('#btnSave').addEventListener('click', function(){
     requestAdd.send(data);
     requestAdd.onreadystatechange = function(){
         if(requestAdd.readyState == 4 && requestAdd.status == 200) {
+            // console.log(requestAdd.responseText);
             var objAdd = JSON.parse(requestAdd.responseText);
             if(objAdd.status){
                 console.log(objAdd.msg);
@@ -524,5 +536,72 @@ document.querySelector('#btnSave').addEventListener('click', function(){
         }
     }
 
+    document.querySelector("#id").value = '';
+    document.querySelector("#nrep").value = '';
+
 });
 
+
+/**
+ * Update Report
+ */
+function update(id){ //, id_rep
+    // console.log(id+' '+id_rep);
+    var requUpd = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
+    var ajaxUpd = base_url+'control/getReport/'+id; //+id_rep
+    requUpd.open('GET', ajaxUpd, true);
+    requUpd.send();
+    requUpd.onreadystatechange = function(){
+        if(requUpd.readyState==4 && requUpd.status==200){
+            // console.log(requUpd.responseText);
+            var objReport = JSON.parse(requUpd.responseText);
+            // console.log(objReport);
+            var id_nombre = objReport.data.map((ids,item)=>{
+                return (ids['id_reporte'] +'-'+ ids['nombre']+'-'+ids['n_reporte']);
+            });
+            // console.log(id_nombre);
+
+            document.querySelector("#id").value = objReport.data[0]['n_reporte'];
+            // document.querySelector("#nrep").value = objReport.data[0]['n_reporte'];
+            document.querySelector("#nrep").value = id_nombre;
+            document.querySelectorAll('.pillArea').forEach(li =>{
+                li.classList.remove('active');
+            });
+            document.querySelector(`#${objReport.data[0]['area']}`).classList.add('active');
+            document.querySelector("#datepicker").value = convertDateFormat(objReport.data[0]['fecha']);
+            document.querySelector("#capacidad").value = objReport.data[0]['capacidad'];
+            document.querySelector("#nreporte").value = objReport.data[0]['n_reporte'];
+            $("#nombres").val(`${objReport.data[0]['producto']}`).trigger('change');
+            
+            var arrayNames = objReport.data.map((nombre)=>{
+                return nombre['nombre'];
+            });
+            $('#empleado').val(arrayNames).trigger('change');                        
+            var arrCant = objReport.data[0]['descripcion'].split(',');
+            var dataCant=[];
+            for(var i=0;i<arrCant.length;i++){
+                dataCant.push(arrCant[i].split(':'));
+            }
+
+            setTimeout(()=>{
+                let p = Array.from(document.querySelectorAll("#padre"));
+                p.forEach((item,i) => {
+                    item.childNodes.item(2).value = dataCant[i][1];
+                });
+            }, 200);
+            
+            
+        }
+    }
+}
+
+
+// @param string (string) : Fecha en formato YYYY-MM-DD
+// @return (string)       : Fecha en formato DD/MM/YYYY
+function convertDateFormat(string) {
+  var info = string.split('-');
+  return info[2] + '/' + info[1] + '/' + info[0];
+}
+/**
+ * End update report
+ */

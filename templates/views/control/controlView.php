@@ -22,7 +22,7 @@
       </ol>
     </section>
 
-    <form action="" id="frmControl">
+    <!-- <form action="" id="frmControl"> -->
    <!-- Main content -->
    <section class="content">
       <div class="row">
@@ -40,16 +40,7 @@
             </div>
             <div class="box-body no-padding divAreas">
               <ul class="nav nav-pills nav-stacked areas" id="areas">
-               <!--  <li class="pillArea active" id="corte"><a href="#"><i class="fa fa-file-text-o"></i> Corte<span class="label label-primary pull-right">12</span></a></li>
-                <li class="pillArea" id="router"><a href="#"><i class="fa fa-file-text-o"></i> Router</a></li>
-                <li class="pillArea" id="pulido_banda"><a href="#"><i class="fa fa-file-text-o"></i> Pulido de banda</a></li>
-                <li class="pillArea" id="armado"><a href="#"><i class="fa fa-file-text-o"></i> Armado <span class="label label-warning pull-right">65</span></a></li>
-                <li class="pillArea" id="pulido"><a href="#"><i class="fa fa-file-text-o"></i> Pulido</a></li>
-                <li class="pillArea" id="detalle"><a href="#"><i class="fa fa-file-text-o"></i> Detalle</a></li>
-                <li class="pillArea" id="pintura"><a href="#"><i class="fa fa-file-text-o"></i> Pintura</a></li>
-                <li class="pillArea" id="laca"><a href="#"><i class="fa fa-file-text-o"></i> Laca</a></li>
-                <li class="pillArea" id="frentes_cajones"><a href="#"><i class="fa fa-file-text-o"></i> Frentes y cajones</a></li>
-                <li class="pillArea" id="melamina"><a href="#"><i class="fa fa-file-text-o"></i> Melamina</a></li> -->
+              
               </ul>
             </div>
             <!-- /.box-body -->
@@ -57,7 +48,7 @@
           <!-- /. box -->
           <div class="box box-solid">
             <div class="box-header with-border">
-              <h3 class="box-title">Labels</h3>
+              <h3 class="box-title">Varios</h3>
 
               <div class="box-tools">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -66,9 +57,9 @@
             </div>
             <div class="box-body no-padding">
               <ul class="nav nav-pills nav-stacked">
-                <li><a href="#"><i class="fa fa-circle-o text-red"></i> Important</a></li>
-                <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> Promotions</a></li>
-                <li><a href="#"><i class="fa fa-circle-o text-light-blue"></i> Social</a></li>
+                <li><a href="#"><i class="fa fa-circle-o text-red"></i> Varios</a></li>
+                <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> Vacaciones</a></li>
+                <!-- <li><a href="#"><i class="fa fa-circle-o text-light-blue"></i> Social</a></li> -->
               </ul>
             </div>
             <!-- /.box-body -->
@@ -90,6 +81,8 @@
                     <div class="row">
                         <div class="col-md-2">
                           <div class="form-group">
+                          <input type="hidden" id="id" name="id" value="">
+                          <input type="hidden" id="nrep" name="nrep" value="">
                               <label>Fecha:</label>
                               <div class="input-group date">
                               <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
@@ -102,22 +95,23 @@
                           <div class="form-group">
                                 <label>Empleado</label>
                                 <select class="form-control select2" style="width: 100%;" name="empleado" id="empleado" multiple="multiple">
-                                <option value="emp1">Empleado 1</option>
-                                <option value="emp2">Empleado 2</option>
-                                <option value="emp3">Empleado 3</option>
+                                
                                 </select>
                             </div>
                         </div>
 
                         <div class="col-md-1">
+                          
+                            <div class="form-group">
+                              <label for="capacidad">Capacidad</label>
+                              <input type="text" class="form-control" id="capacidad" name="capacidad" value="1" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-md-1" id="reporte__num">
                           <div class="form-group">
-                            <label for="capacidad">Capacidad</label>
-                            <select class="form-control" name="capacidad" id="capacidad">
-                              <option value="1">1</option>
-                              <option value="2">2</option>
-                              <option value="3">3</option>
-                              <option value="4">4</option>
-                            </select>
+                            <label for="nreporte">N° reporte</label>
+                            <input type="text" class="form-control" id="nreporte" name="nreporte" readonly>
                           </div>
                         </div>
 
@@ -145,84 +139,35 @@
                         <div class="box-header box-header-sec">
                           <div class="box-body">
 
-                            
-                            <div id="labels" > <!-- style="margin-top: -13px !important;" -->
-                              
-<!-- <form action="" class="form-inline frm">
-  <div class="fila-uno">
-    <div class="form-group in">
-      <label for="cabecera" class="lbls">Cabecera</label>
-      <input type="text" name="cabecera" id="cabecera" class="form-control por">
-      <input type="text" name="cabecera" id="cabecera" class="form-control por">
-      <input type="text" name="cabecera" id="cabecera" class="form-control por">
-    </div>
-  </div>
-  
-  <div class="fila-dos">
-    <div class="form-group in">
-      <label for="tocador" class="lbls">Tocador</label>
-      <input type="text" name="tocador" id="tocador" class="form-control por">
-      <input type="text" name="cabecera" id="cabecera" class="form-control por">
-      <input type="text" name="cabecera" id="cabecera" class="form-control por">
-    </div>
-  </div>
+            <!-- </form> -->
 
-  <div class="fila-tres">
-    <div class="form-group in">
-      <label for="buro" class="lbls">Buro</label>
-      <input type="text" name="buro" id="buro" class="form-control por">
-      <input type="text" name="cabecera" id="cabecera" class="form-control por">
-      <input type="text" name="cabecera" id="cabecera" class="form-control por">
-    </div>
-  </div>
-
-  <div class="fila-cuatro">
-    <div class="form-group in">
-      <label for="luna" class="lbls">Luna</label>
-      <input type="text" name="luna" id="luna" class="form-control por">
-      <input type="text" name="cabecera" id="cabecera" class="form-control por">
-      <input type="text" name="cabecera" id="cabecera" class="form-control por">
-    </div>
-  </div>
-</form> -->
-
-</form>
+                  <div id="labels" >
 
 
-<div class="grid-body">
+                              <div class="grid-body">
 
-<div class="col-uno" id="col-uno">
-    
-  
+                                <div class="col-uno" id="col-uno">
+                                    
+                                  
 
-</div>
+                                </div>
 
 
 
-<div class="col-dos">
-  <div class="form-group">
-    <label for="totalpuntos">Total Puntos</label>
-    <input type="text" class="form-control" id="totalPunto" disabled>
-  </div>
-  <div class="form-group">
-    <label for="totalpuntos">Total Porcentaje</label>
-    <input type="text" class="form-control" id="totalPorcentaje" disabled>
-  </div>
-</div>
+                                <div class="col-dos">
+                                  <div class="form-group">
+                                    <label for="totalpuntos">Total Puntos</label>
+                                    <input type="text" class="form-control" id="totalPunto" disabled>
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="totalpuntos">Total Porcentaje</label>
+                                    <input type="text" class="form-control" id="totalPorcentaje" disabled>
+                                  </div>
+                                </div>
 
-</div>
+                              </div>
                             </div>
- 
-              <!-- <div class="row fila-resultados">
-                <div class="col-xs-1">
-                <label for="">Puntos</label>
-                  <input type="text" class="form-control" disabled>
-                </div>
-                <div class="col-xs-1">
-                  <label for="">Porcentaje</label>
-                  <input type="text" class="form-control" disabled>
-                </div>
-              </div> -->
+
 
                           </div>
                         </div>
@@ -255,6 +200,8 @@
                               <table id="tableUser" class="table table-bordered table-hover dataTable hover" role="grid">
                                   <thead>
                                       <tr role="row">
+                                      <th>N°</th>
+                                      <th>N° reporte</th>
                                       <th>Nombre</th>
                                       <th>Fecha</th>
                                       <th>Area</th>
@@ -262,6 +209,7 @@
                                       <th>Descripción</th>
                                       <th>Puntos</th>
                                       <th>Porcentaje</th>
+                                      <th>Acciones</th>
                                       </tr>
                                   </thead>
                                   <tbody>

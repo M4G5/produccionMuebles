@@ -24,7 +24,9 @@ if( $d->page == 'users'){ ?>
 if($d->page == 'porcentaje'){ ?>
   <script src="<?php echo JS ?>files_js/control.js"></script>
 <?php }
-?>
+if($d->page == 'reportes_muebles'){ ?>
+  <script src="<?php echo JS ?>files_js/muebles.js"></script>
+<?php } ?>
 
 </body>
 </html>

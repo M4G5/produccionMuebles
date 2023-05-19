@@ -21,6 +21,10 @@ class Autoloader
     } elseif(is_file(MODELS.$class_name.'.php')) {
       require_once MODELS.$class_name.'.php';
     }
+    // carpeta modules para exportar excel
+    /* elseif(is_file(MODULES.$class_name.'.php')) {
+      require_once MODULES.$class_name.'.php';
+    } */
 
     return;
   }

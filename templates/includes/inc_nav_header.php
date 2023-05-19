@@ -354,7 +354,7 @@
               </a>
               <ul class="treeview-menu">
                   <li><a href="<?php BASEPATH ?>control"><i class="fa fa-circle-o"></i> Control</a></li>
-                  <li><a href="#"><i class="fa fa-circle-o"></i> Reporte</a></li>
+                  <li><a href="<?php BASEPATH ?>reportemuebles"><i class="fa fa-circle-o"></i> Reporte</a></li>
               </ul>
             </li>
 

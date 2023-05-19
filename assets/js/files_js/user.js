@@ -61,7 +61,6 @@ document.addEventListener('click', (e)=>{
     if(e.target.matches('.delUsr')){
         delUser(e);
     }
-    
 });
 
 function updUser(e)
@@ -77,7 +76,7 @@ function updUser(e)
     requesUpd.send();
     requesUpd.onreadystatechange = function() {
         if(requesUpd.readyState == 4 && requesUpd.status == 200) {
-            console.log(requesUpd.responseText);
+            // console.log(requesUpd.responseText);
             var objUpd = JSON.parse(requesUpd.responseText);
             // console.log(objUpd.data[0]['id_user']);
             document.querySelector("#idUsr").value = objUpd.data[0]['id_user'];
